@@ -8,6 +8,7 @@ import (
 
 	"time"
 
+	"github.com/syariatifaris/genggar"
 	"github.com/syariatifaris/genggar/engine"
 )
 
@@ -19,28 +20,39 @@ type MockData struct {
 }
 
 func main() {
-	server, err := engine.NewEventServer("127.0.0.1", 1234)
+	server, err := genggar.NewEventServer("127.0.0.1", 1234)
 	if err != nil {
 		log.Fatalln("server error", err.Error())
 	}
 	defer server.CloseConn()
 
 	log.Println("server starting on 127.0.0.1:1234")
-	var i int
 
+	stop := make(chan bool)
 	wg.Add(1)
-	go server.ListenForClient()
-
-	wg.Add(1)
-	go server.DispatchEventPublisher()
+	go func() {
+		server.Start(stop)
+	}()
 
 	wg.Add(1)
 	go func() {
-		for {
-			publishFromChannel(i, "First Channel", server)
-			i++
-		}
+		time.Sleep(time.Second * 2)
+		log.Println("time elapsed")
+		stop <- true
+		wg.Done()
 	}()
+
+	//var i int
+	//wg.Add(1)
+	//go server.DispatchEventPublisher()
+	//
+	//wg.Add(1)
+	//go func() {
+	//	for {
+	//		publishFromChannel(i, "First Channel", server)
+	//		i++
+	//	}
+	//}()
 
 	wg.Wait()
 }

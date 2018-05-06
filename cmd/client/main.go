@@ -4,7 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"sync"
 )
+
+var wg sync.WaitGroup
 
 func main() {
 	p := make([]byte, 2048)
@@ -25,12 +28,17 @@ func main() {
 
 	fmt.Fprintf(conn, fmt.Sprint("[REG]:", conn.LocalAddr()))
 
-	for {
-		n, err := bufio.NewReader(conn).Read(p)
-		if err == nil {
-			fmt.Printf("[Server Says]: %s\n", string(p[0:n]))
-		} else {
-			fmt.Printf("Some error %v\n", err)
+	wg.Add(1)
+	go func() {
+		for {
+			n, err := bufio.NewReader(conn).Read(p)
+			if err == nil {
+				fmt.Printf("[Server Says]: %s\n", string(p[0:n]))
+			} else {
+				fmt.Printf("Some error %v\n", err)
+			}
 		}
-	}
+	}()
+
+	wg.Wait()
 }
