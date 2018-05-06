@@ -21,14 +21,15 @@ type Client interface {
 	GetUDPAddr() *net.UDPAddr
 	SetDispatching(bool)
 	IsDispatched() bool
+	GetTopicName() string
 
 	LogAllElemFront()
 }
 
 type Property struct {
-	Name    string
-	Address *net.UDPAddr
-	//to do
+	Name      string
+	Topic     string
+	Address   *net.UDPAddr
 	MaxBuffer int
 }
 
@@ -102,6 +103,10 @@ func (c *clientImpl) GetBufferLen() int {
 
 func (c *clientImpl) GetUDPAddr() *net.UDPAddr {
 	return c.prop.Address
+}
+
+func (c *clientImpl) GetTopicName() string {
+	return c.prop.Topic
 }
 
 func (c *clientImpl) LogAllElemFront() {
