@@ -115,10 +115,8 @@ Nevertheless, I have some point in my mind for the next milestone such as:
 
 ## Contribution
 
-This apps is being monitored and managed by Transaction Tribe (Stitch and Groot Squad).  To contribute the development, please do as follow: 
-
  - Fork the transactionapp repository to your remote
- - Add your remote to your local git transactionapp
+ - Add your remote to your local git genggar
  - From **master** branch at your local, checkout to your feature branch, and start the development
  - Make a pull request to staging, and do the test properly after getting approved on our staging server
  - Make a pull request to master
