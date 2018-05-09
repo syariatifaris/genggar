@@ -115,7 +115,7 @@ Nevertheless, I have some point in my mind for the next milestone such as:
 
 ## Contribution
 
- - Fork the transactionapp repository to your remote
+ - Fork the genggar repository to your remote
  - Add your remote to your local git genggar
  - From **master** branch at your local, checkout to your feature branch, and start the development
  - Make a pull request to staging, and do the test properly after getting approved on our staging server
